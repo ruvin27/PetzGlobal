@@ -1,0 +1,42 @@
+.nav_brand {
+  padding: 10px;
+}
+
+.notification {
+  margin-left: auto;
+}
+
+.unc_cor {
+  /* max-width: 400px; */
+  width: 80%;
+  height: 400px;
+  padding: 30px;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #2b2770;
+}
+
+.btn_button {
+  max-width: 300px;
+  width: 100%;
+  height: 250px;
+  margin: 50px 30px;
+}
+
+@media (max-width: 420px) {
+  .unc_cor {
+    height: 250px;
+    margin: 20px auto;
+  }
+
+  .btn_button {
+    max-width: 160px;
+    height: 150px;
+    margin: 15px 5px;
+  }
+
+  h2 {
+    display: none;
+  }
+}

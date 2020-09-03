@@ -1,0 +1,12 @@
+.login-form {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  margin: auto;
+  height: 100%;
+  text-align: left;
+}
+
+.font-large {
+  font-size: large;
+}

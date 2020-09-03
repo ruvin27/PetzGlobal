@@ -1,0 +1,17 @@
+#car_item {
+  color: #fff;
+  margin-top: 25%;
+}
+
+.h3_class {
+  font-size: 50px;
+}
+
+@media (max-width: 420px) {
+  #car_item {
+    margin-top: 60%;
+  }
+  .h3_class {
+    font-size: large;
+  }
+}

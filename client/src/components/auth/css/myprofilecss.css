@@ -1,0 +1,194 @@
+.nav_brand {
+  padding: 10px;
+}
+
+.unc_cor {
+  /* max-width: 400px; */
+  width: 80%;
+  height: 400px;
+  padding: 30px;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #2b2770;
+}
+
+.btn_button {
+  max-width: 300px;
+  width: 100%;
+  height: 250px;
+  margin: 50px 30px;
+}
+
+
+
+.btn_button1 {
+  max-width: 300px;
+  width: 50%;
+  height: 120px;
+  margin: 50px 30px;
+ border-radius: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.button {
+  background-color: #188dd1;
+  border: none;
+  color: white;
+  padding: 12px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px 10px;
+  cursor: pointer;
+  border-radius: 5%
+}
+.button1 {
+  background-color: #188dd1;
+  border: none;
+  color: white;
+  padding: 12px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px 10px;
+  cursor: pointer;
+  float: left;
+  border-radius: 5%
+}
+/*for menu baar */
+.top_line{
+  background: #FFAE33;
+  padding: 15px;
+  margin: auto;
+  text-align: left;
+  margin-top: 10px;
+  max-width: 60%;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+
+.appoint_class3 {
+  max-width: 80%;
+  width: 100%;
+  height: 100px;
+  margin: auto;
+  margin-top: 10px;
+  justify-content:center ;
+}
+
+
+
+.nev_right{
+ 
+  
+}
+
+
+
+.list_group {
+  margin-bottom: 20px;
+  justify-content: space-around;
+}
+
+.list_group2 {
+  margin-top: 20px;
+  max-width: 100%;
+  margin-bottom: 20px;
+  justify-content: space-around;
+}
+
+.button:hover{
+  background-color: #1b18d1;
+}
+
+.button1:hover{
+  background-color: #1b18d1;
+}
+.appoint_class2 {
+  max-width: 60%;
+  width: 100%;
+  height: 140px;
+  margin: auto;
+  margin-top: 30px;
+}
+
+
+
+
+
+@media (max-width: 420px) {
+  .unc_cor {
+    height: 250px;
+    margin: 20px auto;
+  }
+
+  .btn_button {
+    max-width: 160px;
+    height: 150px;
+    margin: 15px 5px;
+  }
+  
+    
+
+ 
+
+    
+  .button {
+  
+    padding: 10px 25px;
+    display: auto;  
+    margin: 2px 5px;
+ 
+  }
+  
+  .button1 {
+    width: 40%;
+     max-width: 1080px;
+      margin: 0 auto;
+
+  }
+
+
+  h2 {
+    display: none;
+  }
+}
+
+
+
+
+.container_class {
+  position: relative;
+  text-align: center;
+  color: white;
+
+ 
+}
+
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 18%;
+}
+
+.centered {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  
+  transform: translate(-50%, -50%);
+}

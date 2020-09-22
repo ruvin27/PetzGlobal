@@ -18,29 +18,46 @@ import { Link } from "react-router-dom";
 import { BsFillPersonLinesFill } from "react-icons/bs";
 import { FcMenu,FcSettings } from "react-icons/fc";
 import profile from'../assets/pro.png';
-var name = null
-
+import axios from 'axios';
 class Dashboard extends Component {
+  _isMounted = false;
+
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
   };
+  state = {
+    name : ''
+  }
 
   profilepic = () => { 
-    console.log(name)
-
-    if(name === '')
+    if(this.state.name === '')
     {
       return  <img style={{width:"100px" ,height:"100px", borderRadius:"50%"}}  alt="cat" src={profile}/>
 
     }
-     return <img  style={{width:"100px" ,height:"100px", borderRadius:"50%"}} alt="cat" src={require(`../assets/${name}`)}/>
+     return <img  style={{width:"100px" ,height:"100px", borderRadius:"50%"}} alt="cat" src={require(`../assets/${this.state.name}`)}/>
     
+  }
+componentDidMount() {
+  this._isMounted = true;
+  axios.get(`http://localhost:5000/api/users/find/${this.props.auth.user.email}`)
+    .then(res => {
+      if (this._isMounted) {
+      this.setState({
+        name : res.data.user.filename
+      });
+    }
+    });
+
+}
+  componentWillUnmount = () => {
+
+    this._isMounted = false;
+
   }
 
   render() {
-    const { user } = this.props.auth;
-    name = this.props.auth.user.filename;
     return (
       <div>
         <div>
@@ -58,7 +75,6 @@ class Dashboard extends Component {
               PetzGlobal
             </Navbar.Brand>
             </Link>
-            <h4>Hello {user.name}</h4>
             <Link to="/notifications" className="notification">
               <Button style={{ background: "#201e4d", border: "none" }}>
                 <FontAwesomeIcon

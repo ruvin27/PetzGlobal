@@ -8,6 +8,7 @@ import axios from 'axios';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import {Invoices} from "./event";
 
 export class Invoice extends Component {
   state = {
@@ -30,12 +31,7 @@ export class Invoice extends Component {
   };
   data = () => {
     return this.state.invoices.map((data,i) => {
-      return (
-            <ListGroup.Item action variant="primary" className="list_group" key={i}>
-              <h4 style={{ textAlign: "start" }}>{data.name}</h4>
-              <h6 style={{ textAlign: "start" }}>{data.amt}</h6>
-            </ListGroup.Item>
-        )
+      return <Invoices obj={data} key={i} />;
     });
   }
   render() {

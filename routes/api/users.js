@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
 const multer = require('multer');
+const crypto = require('crypto');
+const axios = require('axios');
 
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
@@ -13,20 +15,6 @@ const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
 
-let name = null
-
-var storage = multer.diskStorage({ 
-  destination: function (req, file, cb) { 
-
-      // Uploads is the Upload folder 
-      cb(null, "client/src/components/assets") 
-  }, 
-  filename: function (req, file, cb) { 
-    cb(null, name) 
-  } 
-}) 
-    
-const upload = multer({ storage });
 
 
 
@@ -60,7 +48,7 @@ router.post("/register",  (req, res) => {
         college: req.body.college,
         experience: req.body.experience,
         password: req.body.password,
-        filename: req.body.name+req.body.phone+'.jpg'
+        filename: ''
       });
       name= req.body.name+req.body.phone+'.jpg'
       // Hash password before saving in database
@@ -144,17 +132,54 @@ router.post("/login", (req, res) => {
   });
 });
 
-router.post('/cert', upload.single('certificate'), (req, res) => {
-res.redirect('/login')
+let name = "";
+crypto.randomBytes(16, (err, buf) => {
+  if (err) return reject(err);
+  const filename = buf.toString('hex') + ".jpg";
+  name = filename;
+});
+
+var storage = multer.diskStorage({ 
+  destination: function (req, file, cb) { 
+
+      cb(null, "client/src/assets") 
+  }, 
+  filename: function (req, file, cb) { 
+    cb(null, name) 
+  } 
+}) 
+    
+const upload = multer({ storage });
+
+
+router.post('/profile', upload.single('profile'), (req, res) => {
+  console.log(name)
 });
 
 
 router.patch('/delete/:id', (req, res) => {
-	User.update({ email : req.params.id}, {$set: {filename : "" }})
+	User.updateOne({ email : req.params.id}, {$set: {filename : "" }})
 	.then(user => {
     res.json({success: true})
   })
 	.catch(err => res.json({success: false}));
 });
+
+router.patch('/update/:id/:name/:phone', (req, res) => {
+	User.updateOne({ email : req.params.id}, {$set: {filename : req.params.name+ req.params.phone+".jpg" }})
+	.then(user => {
+    res.json({success: true})
+  })
+	.catch(err => res.json({success: false}));
+});
+
+router.get('/find/:id', (req, res) => {
+	User.findOne({ email : req.params.id})
+	.then(user => {
+    res.json({user})
+  })
+	.catch(err => res.json({success: false}));
+});
+
 
 module.exports = { users:router };

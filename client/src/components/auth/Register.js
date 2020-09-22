@@ -45,7 +45,7 @@ class Register extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
@@ -55,8 +55,10 @@ class Register extends Component {
 
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
-  }
+  };
+
   onSubmit = e => {
+    e.preventDefault();
 
     const newUser = {
       name: this.state.name,
@@ -72,6 +74,7 @@ class Register extends Component {
       password: this.state.password,
       password2: this.state.password2
     };
+    console.log(newUser)
     this.props.registerUser(newUser, this.props.history);
   };
 
@@ -82,7 +85,7 @@ class Register extends Component {
 
       <div className="auth-inner_page">
           <div className="auth-wrapper_page ">
-            <form encType="multipart/form-data" method="post" action="/api/users/cert">
+            <form noValidate onSubmit={this.onSubmit} >
               
             <h3>Sign Up</h3>
 
@@ -223,10 +226,7 @@ class Register extends Component {
         </div>
 
        
-        <div className="form-group">
-                <label>Upload Profile Picture</label>
-                <input type="file" className="file-input" name="certificate" required/>
-        </div>
+        
 
         
 
@@ -271,8 +271,7 @@ class Register extends Component {
 
             <button 
             type="submit" 
-            className="btn btn-primary btn-block"
-            onClick={this.onSubmit}>Sign Up
+            className="btn btn-primary btn-block">Sign Up
             </button>
             <div className="forgot-password text-right">
                 Already registered <Link to="/">sign in?</Link>

@@ -13,7 +13,6 @@
     "bootstrap": "^4.5.0",
     "classnames": "^2.2.6",
     "dependencies": "0.0.1",
-    "fs": "0.0.1-security",
     "jwt-decode": "^2.2.0",
     "moment": "^2.27.0",
     "react": "^16.13.1",
@@ -40,7 +39,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:5000",
   "eslintConfig": {
     "extends": "react-app"
   },

@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 var cors = require('cors')
-const methodOverride = require('method-override');
 const {users} = require("./routes/api/users");
 
 const app = express();
@@ -17,7 +16,6 @@ app.use(
 app.use(bodyParser.json());
 app.use(cors())
 app.use(express.json());
-app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 // DB Config
 const db = require("./config/keys").mongoURI;
@@ -26,7 +24,7 @@ const db = require("./config/keys").mongoURI;
 mongoose
   .connect(
     db,
-    { useNewUrlParser: true }
+    { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("MongoDB successfully connected"))
   .catch(err => console.log(err));
@@ -40,10 +38,10 @@ require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
 
-var profile_pic = require("./routes/profile_pic")
-app.use('/api/uploadpic', profile_pic);
 
 
+var scheduler = require('./routes/schedule');
+app.use('/api/schedule', scheduler);
 
 var invoice = require('./routes/Invoices');
 app.use('/api/invoices', invoice);

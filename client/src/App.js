@@ -18,7 +18,7 @@ import Schedule from './components/dashboard/schedule';
 import Approve_appoinment from './components/dashboard/approve_appoinment';
 import Add_Appoinment from './components/dashboard/add_appoinment';
 import MyPatients from './components/dashboard/mypatients';
-import Service from './components/dashboard/mypatientprofile';
+import MyPatientProfile from './components/dashboard/mypatientprofile';
 import Add_Prescription from './components/dashboard/add_prescription';
 import Prescription from './components/dashboard/history';
 import Invoice from './components/dashboard/invoice';
@@ -72,7 +72,7 @@ class App extends Component {
               <PrivateRoute exact path="/approve_appoinment" component={Approve_appoinment}/>
               <PrivateRoute exact path="/add_appoinment" component={Add_Appoinment}/>
               <PrivateRoute exact path="/mypatients" component={MyPatients}/>
-              <PrivateRoute exact path="/mypatientprofile" component={Service}/>
+              <PrivateRoute exact path="/mypatientprofile/:id" component={MyPatientProfile}/>
               <PrivateRoute exact path="/add_prescription" component={Add_Prescription}/>
               <PrivateRoute exact path="/history" component={Prescription}/>
               <PrivateRoute exact path="/myprofile" component={MyProfile}/>

@@ -14,12 +14,63 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import axios from 'axios';
 
-export class Service extends Component {
+
+export class MyPatientProfile extends Component {
+  _isMounted = false;
+
+  state = {
+    patient : {
+      name: "",
+      email: "",
+      parent: "",
+      pet: ""
+    }
+  }
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
   };
+  componentDidMount() {
+    this._isMounted = true;
+    axios.get(`http://localhost:5000/api/patients/find/${this.props.match.params.id}`)
+    .then(res => {
+      if (this._isMounted) {
+      this.setState({
+        patient : res.data
+      })
+    }
+    })
+    .catch(res =>{
+      console.log(res)
+    });
+  
+  }
+    componentWillUnmount = () => {
+  
+      this._isMounted = false;
+  
+    }
+
+details = () => {
+return (<div> 
+  <div className="name">
+<h3  style={{padding: '20px'}}>{this.state.patient.name}</h3>
+  </div>
+    
+    
+    <div className="container">
+    <ListGroup.Item action variant="primary" className="list_group2">
+<h4 style={{ textAlign: "center",color:"#000" }}>Patient Info </h4>
+<h6 style={{ textAlign: "start" }}>Parent Name : {this.state.patient.parent} </h6>
+<h6 style={{ textAlign: "start" }}>Breed : {this.state.patient.pet}</h6>
+<h6 style={{ textAlign: "start" }}>Date Of Birth : 1/January/2001</h6>
+<h6 style={{ textAlign: "start" }}> Bio :  </h6>
+</ListGroup.Item>
+</div>
+    </div>)
+}
 
 render(){
   return (
@@ -63,24 +114,8 @@ render(){
             
             
           </div>
- 
-        <div className="name">
-          <h1 >
-            Tommy </h1>
-        </div>
-          
-          
-          <div className="container">
-   
-          <ListGroup.Item action variant="primary" className="list_group2">
-              <h4 style={{ textAlign: "center",color:"#000" }}>Patient Info </h4>
-              <h6 style={{ textAlign: "start" }}>Pet Name : </h6>
-              <h6 style={{ textAlign: "start" }}>Breed : </h6>
-              <h6 style={{ textAlign: "start" }}>Date Of Birth : 1/January/2001</h6>
-              <h6 style={{ textAlign: "start" }}> Bio :  </h6>
-          </ListGroup.Item>
-          </div>
-          
+        
+          {this.details()}
            
              <div className="btn-group">
 
@@ -100,7 +135,7 @@ render(){
   );
 }
 }
-Service.propTypes = {
+MyPatientProfile.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
@@ -112,4 +147,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { logoutUser }
-)(Service);
+)(MyPatientProfile);

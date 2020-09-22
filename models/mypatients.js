@@ -9,6 +9,14 @@ const PatientSchema = new Schema({
 	pet:{
 		type: String,
 		required: true	
+	},
+	parent:{
+		type: String,
+		required: true
+	},
+	email:{
+		type: String,
+		required: true	
 	}
 });
 

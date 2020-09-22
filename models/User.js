@@ -53,7 +53,6 @@ const UserSchema = new Schema({
   },
   filename: {
     type: String,
-    required: true
   }
 });
 

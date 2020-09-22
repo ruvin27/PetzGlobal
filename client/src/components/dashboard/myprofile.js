@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './css/myprofile_css.css'
-import { ListGroup, Navbar, Dropdown} from "react-bootstrap";
+import { ListGroup, Navbar, Dropdown, Modal, Button} from "react-bootstrap";
 import "./css/myprofilecss.css"
 import { faPaw } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,13 +19,44 @@ import { BsFillTrashFill } from "react-icons/bs";
 import axios from 'axios';
 
 class MyProfile extends Component {
+  _isMounted = false;
 onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
   };
 
   state = {
-    name : this.props.auth.user.filename
+    name : '',
+    show : false
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+    axios.get(`http://localhost:5000/api/users/find/${this.props.auth.user.email}`)
+    .then(res => {
+      if (this._isMounted) {
+      this.setState({
+        name : res.data.user.filename
+      })
+    }
+    })
+  
+  }
+    componentWillUnmount = () => {
+  
+      this._isMounted = false;
+  
+    }
+
+  handleClose = () => this.setState( {show:false});
+
+  handleShow = () => this.setState( {show:true});
+
+  upload = () => {
+    axios.post(`http://localhost:5000/api/users/profile`)
+    .then(res => {
+      console.log(res)
+    })
   }
 
   remove = () => {
@@ -41,14 +72,49 @@ onLogoutClick = e => {
   }
 
   profilepic = () => { 
-  
     if(this.state.name === '')
     {
       return <img  className="img-profile" alt="cat" src={profile}/>
     }
      return <img  className="img-profile" alt="cat" src={require(`../assets/${this.state.name}`)}/>
-    
   }
+
+
+  options = () => {
+    if(this.state.name === '')
+    {
+     return (<Dropdown.Menu> 
+      <Dropdown.Item href="#"><FcCamera size="25px" />Take Photo</Dropdown.Item>
+      <Dropdown.Item onClick={this.handleShow}><FcGallery size="25px" />Gallery</Dropdown.Item>
+      <Modal show={this.state.show} onHide={this.handleClose}>
+      <form action='http://localhost:5000/api/users/profile' encType="multipart/form-data" method="POST">
+        
+        <Modal.Header closeButton>
+          <Modal.Title>Upload Picture</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input type="file" accept="image/*" multiple = "false" name="pro" />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={this.handleClose}>
+            Close
+          </Button>
+          <Button variant="primary">
+            Upload
+          </Button>
+        </Modal.Footer>
+        </form>
+      </Modal>
+      </Dropdown.Menu> );
+    }
+    else {
+      return (<Dropdown.Menu> 
+      <Dropdown.Item onClick={this.remove} href="#">{" "}<BsFillTrashFill size="20px"/>{" "}Remove  Photo</Dropdown.Item>
+    <Dropdown.Item href="#"><FcCamera size="25px" />{" "}Take Photo</Dropdown.Item>
+    <Dropdown.Item href="#"><FcGallery size="25px" />{" "}Gallery</Dropdown.Item>
+    </Dropdown.Menu> );
+  }
+}
   
 render(){
   return (
@@ -92,11 +158,7 @@ render(){
             <AiFillCamera size="50px"/>
             </Dropdown.Toggle>
         
-            <Dropdown.Menu> 
-            <Dropdown.Item onClick={this.remove} href="#">{" "}<BsFillTrashFill size="20px"/>{" "}Remove  Photo</Dropdown.Item>
-              <Dropdown.Item href="#"><FcCamera size="25px" />{" "}Take Photo</Dropdown.Item>
-              <Dropdown.Item href="#"><FcGallery size="25px" />{" "}Gallery</Dropdown.Item>
-            </Dropdown.Menu>
+           {this.options()}
           </Dropdown>
               
             </div>
@@ -105,10 +167,11 @@ render(){
             <div className="bottom-right">
 
             <Dropdown  >
+              <Link to="/editprofile">
             <Dropdown.Toggle variant="success" id="dropdown-basic">
             <FcCamera size="30px" />Edit cover Photo
             </Dropdown.Toggle>
-        
+            </Link>
             <Dropdown.Menu> 
               <Dropdown.Item href="#">{" "}<BsFillTrashFill size="20px"/>{" "}Remove  Photo</Dropdown.Item>
               <Dropdown.Item href="#"><FcCamera size="25px" />{" "}Take Photo</Dropdown.Item>
@@ -122,7 +185,7 @@ render(){
           </div>
  
         <div className="name">
-          <h1 >
+          <h1 style={{padding: '20px'}}>
             {this.props.auth.user.name} </h1>
         </div>
           
@@ -137,7 +200,7 @@ render(){
               <h6 style={{ textAlign: "start" }}>Pincode : {this.props.auth.user.pincode} </h6>
               <h6 style={{ textAlign: "start" }}>Experience : {this.props.auth.user.experience} </h6>
               <h6 style={{ textAlign: "start" }}>Contact Number : {this.props.auth.user.phone}</h6>
-              <button type="button" className="btn btn-primary">Edit Details</button>
+              <input  className="btn btn-primary" placeholder="Edit Details" style={{color:"white"}}/>
           </ListGroup.Item>
           </div>
          

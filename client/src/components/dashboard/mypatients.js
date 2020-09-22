@@ -8,7 +8,10 @@ import axios from 'axios';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import {Patients} from "./event";
+
 export class MyPatients extends Component {
+  _isMounted = false;
   state = {
     patients : []
   }
@@ -17,28 +20,28 @@ export class MyPatients extends Component {
     this.props.logoutUser();
   };
 
-  componentDidMount(){
+  componentDidMount() {
+    this._isMounted = true;
     axios.get('http://localhost:5000/api/patients')
     .then(res => {
+      if (this._isMounted) {
       this.setState({
         patients : res.data
       })
+    }
     })
     .catch(res =>{
       console.log(res)
     });
   }
-  onClick = (res) => {
-    console.log(res)
-  } 
+
+  componentWillUnmount = () => {
+    this._isMounted = false;
+  }
+
   data(){
     return this.state.patients.map((data,i) => {
-        return (<Link to ='/mypatientprofile'>
-            <ListGroup.Item action variant="primary" className="list_group" key={i} onClick = {() => this.onClick(data)} >
-              <h4 style={{ textAlign: "start" }}>{data.name}</h4>
-              <h6 style={{ textAlign: "start" }}>{data.pet}</h6>
-            </ListGroup.Item>
-            </Link>)
+        return <Patients obj={data} key={i} />;
     })
   }
 

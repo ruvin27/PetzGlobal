@@ -25,6 +25,7 @@ import Invoice from './components/dashboard/invoice';
 import MyProfile from './components/dashboard/myprofile';
 import Notification from './components/dashboard/notifications';
 import Certificate from './components/dashboard/addmore_certificate';
+import EditAppointment from './components/dashboard/edit_appointments';
 
 import "./App.css";
 
@@ -78,7 +79,7 @@ class App extends Component {
               <PrivateRoute exact path="/myprofile" component={MyProfile}/>
               <PrivateRoute exact path="/invoice" component={Invoice}/>
               <PrivateRoute exact path="/notifications" component={Notification}/>
-
+              <PrivateRoute exact path="/editappointment/:id" component={EditAppointment}/>
             </Switch>
           </div>
           </div>

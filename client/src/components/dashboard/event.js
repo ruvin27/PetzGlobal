@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ListGroup} from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Label} from "reactstrap";
 
 export class Appointments extends Component {
     render() {
@@ -11,6 +12,21 @@ export class Appointments extends Component {
             <h6 style={{ textAlign: "start" }}>Issue: {this.props.obj.userReason}</h6>
             <h6 style={{ textAlign: "start" }}>appointment Timing : {this.props.obj.userTiming}</h6>
             <h6 style={{ textAlign: "start" }}>Completed Status : {this.props.obj.appointment_completed}</h6>
+            <Link to={"/editappointment/"+this.props.obj._id}><Label
+            className="button_holder btn btn-primary"
+          >
+        Edit 
+          </Label> </Link>
+          <Label
+            className="button_holder btn btn-primary"
+          >
+        Accept
+          </Label>
+          <Label
+            className="button_holder btn btn-primary"
+          >
+        Reject 
+          </Label>
             </ListGroup.Item>
         );
     }

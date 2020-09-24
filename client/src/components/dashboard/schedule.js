@@ -11,6 +11,8 @@ import { connect } from "react-redux";
 import axios from 'axios';
 
 export class Schedule extends Component {
+  _isMounted = false;
+
   constructor(...args) {
     super(...args)
 
@@ -25,20 +27,22 @@ export class Schedule extends Component {
     this.props.logoutUser();
   };
   componentDidMount = () => {
+    this._isMounted = true;
     axios.get(`http://localhost:5000/api/schedule/${this.props.auth.user.email}`)
     .then(res => {
+      if (this._isMounted) {
       this.setState({
         appointments: res.data
       })
+    }
     })
     .catch(res =>{
     });
   }
   componentWillUnmount = () => {
-    this.setState({
-      appointments: []
-    });
+    this._isMounted = false;
   }
+
 
   dataTable(){
     return this.state.appointments.map((data, i) => {

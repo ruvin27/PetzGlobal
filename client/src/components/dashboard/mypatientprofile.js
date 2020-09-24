@@ -77,16 +77,11 @@ render(){
     <div>
       <Navbar style={{ background: "#201e4d" }}>
               <Link to='/dashboard'>
-              <Navbar.Brand
-              className="nav_brand"
-              style={{ color: "#fff", fontSize: "30px" }}
-            >
-            <FontAwesomeIcon
+              <FontAwesomeIcon
               icon={faPaw}
-              size="2x"
+              size="3x"
               style={{ color: "#fff" }}
             ></FontAwesomeIcon>
-            </Navbar.Brand>
             <Navbar.Brand
               className="nav_brand"
               style={{ color: "#fff", fontSize: "40px" }}

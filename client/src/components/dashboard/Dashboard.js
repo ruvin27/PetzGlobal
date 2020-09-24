@@ -15,7 +15,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Navbar, Button, Badge  ,Dropdown,SplitButton} from "react-bootstrap";
 import Uncontrolcarousel from "./carousel";
 import { Link } from "react-router-dom";
-import { BsFillPersonLinesFill } from "react-icons/bs";
 import { FcMenu,FcSettings } from "react-icons/fc";
 import profile from'../assets/pro.png';
 import axios from 'axios';
@@ -95,7 +94,6 @@ componentDidMount() {
         variant="primary"
         title={<FcMenu size="40px" />}
       >
-        <Dropdown.Item href="#"><BsFillPersonLinesFill size="20px"/>{" "}My Profile</Dropdown.Item>
       <Dropdown.Item href="#"><FcSettings size="20px"/>{" "}Setting</Dropdown.Item>
       <Dropdown.Item onClick={this.onLogoutClick} >Logout</Dropdown.Item>
         

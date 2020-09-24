@@ -9,9 +9,8 @@ class Uncontrolcarousel extends Component {
         <Carousel>
           <Carousel.Item>
             <img
-              className="d-block w-100 "
               id="car_item"
-              // src="holder.js/800x400?text=First slide&bg=373940"
+              src="../assets/cat.jpg"
               alt="First slide"
             />
             <Carousel.Caption>
@@ -23,7 +22,7 @@ class Uncontrolcarousel extends Component {
             <img
               className="d-block w-100 "
               id="car_item"
-              // src="holder.js/800x400?text=First slide&bg=373940"
+              src="../assets/cat2.jpg"
               alt="Second slide"
             />
             <Carousel.Caption>
@@ -35,7 +34,7 @@ class Uncontrolcarousel extends Component {
             <img
               className="d-block w-100 "
               id="car_item"
-              // src="holder.js/800x400?text=First slide&bg=373940"
+              src="../assets/cat2.jpg"
               alt="Third slide"
             />
             <Carousel.Caption>

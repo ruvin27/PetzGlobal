@@ -1,9 +1,47 @@
-import React, { useState } from "react";
+import React, {useState, useEffect} from "react";
 import { Modal } from "react-bootstrap";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import { Link } from "react-router-dom";
+import axios from 'axios';
 
 function TheModal(props) {
+  const [name,setName] = useState("");
+  const [address,setAddress] = useState("");
+  const [dob,setDob] = useState("");
+  const [pincode,setPin] = useState("");
+  const [experience,setExp] = useState("");
+  const [phone,setPhone] = useState("");
+  const [city,setCity] = useState("");
+  const [email] = useState(props.user.email);
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/api/users/find/${email}`)
+      .then(res => {
+        setName(res.data.user.name);
+        setAddress(res.data.user.address);
+        setDob(res.data.user.dob);
+        setPin(res.data.user.pincode);
+        setExp(res.data.user.experience);
+        setCity(res.data.user.city);
+        setPhone(res.data.user.phone);
+      });
+  }, [email]);
+
+const onSubmit = (e) => {
+  e.preventDefault();
+  const User = {
+    name: name,
+    email: email,
+    phone: phone,
+    dob: dob,
+    address: address,
+    city: city,
+    pincode: pincode,
+    experience: experience,
+  };
+  axios
+  .patch("http://localhost:5000/api/users/update/myprofile", User)
+  props.onHide()
+}
   return (
     <Modal
       {...props}
@@ -13,7 +51,7 @@ function TheModal(props) {
     >
       <Modal.Header
         closeButton
-        style={{ "background-color": "#201e4d", color: "white" }}
+        style={{ "backgroundColor": "#201e4d", color: "white" }}
       >
         <Modal.Title id="contained-modal-title-vcenter">
             Edit Your Details
@@ -22,34 +60,46 @@ function TheModal(props) {
       <Modal.Body>
         <Form className="login-form">
           <FormGroup>
-            <Label className="font-large">Pet Name</Label>
-            <Input type="dosage" placeholder="Pet Name" />
+            <Label className="font-large">Name</Label>
+            <Input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} required/>
           </FormGroup>
 
           <FormGroup>
             <Label className="font-large pt-3">Date Of Birth</Label>
-            <Input type="date" placeholder="Date Of Birth" />
+            <Input type="date" placeholder="Date Of Birth" value={dob} onChange={e => setDob(e.target.value)} required/>
+          </FormGroup>
+          <FormGroup>
+            <Label className="font-large">Address</Label>
+            <Input type="text" placeholder="Address" value={address} onChange={e => setAddress(e.target.value)} required/>
           </FormGroup>
 
           <FormGroup>
-            <Label className="font-large"> Breed</Label>
-            <Input type="text" placeholder="Breed" />
+            <Label className="font-large">City</Label>
+            <Input type="text" placeholder="Address" value={city} onChange={e => setCity(e.target.value)} required/>
           </FormGroup>
 
           <FormGroup>
-            <Label className="font-large">Bio</Label>
-            <Input type="text" placeholder=" " />
+            <Label className="font-large"> Pincode</Label>
+            <Input type="text" placeholder="Pincode" value={pincode} onChange={e => setPin(e.target.value)} required/>
           </FormGroup>
 
-          {/* Add link to my appointments page */}
-          {/* <Link to="/MyAppointmentsPage"> */}
+          <FormGroup>
+            <Label className="font-large">Experience</Label>
+            <Input type="text" placeholder=" " value={experience} onChange={e => setExp(e.target.value)} required />
+          </FormGroup>
+          <FormGroup>
+            <Label className="font-large">Contact Number</Label>
+            <Input type="text" placeholder=" " value={phone} onChange={e => setPhone(e.target.value)} required={true}/>
+          </FormGroup>
+
           <Button
             className="btn-lg btn-dark btn-block"
             style={{ borderRadius: "80px", background: "#201e4d" }}
+            type="submit"
+            onClick={onSubmit}
           >
             Save
           </Button>
-          {/* </Link> */}
         </Form>
       </Modal.Body>
       <Modal.Footer>
@@ -66,26 +116,19 @@ function TheModal(props) {
   );
 }
 
-function Edit_Profile() {
+function Editprofile(props) {
   const [modalShow, setModalShow] = React.useState(false);
-
   return (
     <>
-      {/* <Button variant="primary" onClick={() => setModalShow(true)}>
-        Launch vertically centered modal
-      </Button> */}
-      <Button
-            className="button_holder"
+      <Label
+            className="button_holder btn btn-primary"
             onClick={() => setModalShow(true)}
-            style={{
-              
-            }}
           >
-        Edit Details
-          </Button>
-      <TheModal show={modalShow} onHide={() => setModalShow(false)} />
+        Edit Details 
+          </Label>
+      <TheModal show={modalShow} onHide={() => setModalShow(false)} user={props.user} />
     </>
   );
 }
 
-export default Edit_Profile;
+export default Editprofile;

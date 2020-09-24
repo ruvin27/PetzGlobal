@@ -151,12 +151,12 @@ var storage = multer.diskStorage({
     
 const upload = multer({ storage });
 
-
+//upload file
 router.post('/profile', upload.single('profile'), (req, res) => {
   console.log(name)
 });
 
-
+//remove filename
 router.patch('/delete/:id', (req, res) => {
 	User.updateOne({ email : req.params.id}, {$set: {filename : "" }})
 	.then(user => {
@@ -165,6 +165,7 @@ router.patch('/delete/:id', (req, res) => {
 	.catch(err => res.json({success: false}));
 });
 
+//change filename
 router.patch('/update/:id/:name/:phone', (req, res) => {
 	User.updateOne({ email : req.params.id}, {$set: {filename : req.params.name+ req.params.phone+".jpg" }})
 	.then(user => {
@@ -173,12 +174,22 @@ router.patch('/update/:id/:name/:phone', (req, res) => {
 	.catch(err => res.json({success: false}));
 });
 
+//find user id with email
 router.get('/find/:id', (req, res) => {
 	User.findOne({ email : req.params.id})
 	.then(user => {
     res.json({user})
   })
 	.catch(err => res.json({success: false}));
+});
+
+
+//change user details
+router.patch('/update/myprofile', (req, res) => {
+	User.updateOne({ email : req.body.email}, {$set: {name : req.body.name, phone: req.body.phone, dob : req.body.dob, address: req.body.address, city: req.body.city, pincode: req.body.pincode, experience: req.body.experience}})
+	.then()
+  .catch(err => res.json({success: false}))
+
 });
 
 
